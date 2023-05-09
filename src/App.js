@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
-
 import { SearchBar, VideoDetail, VideoList } from './components'; // index.js dosyası oluşturup component klasorunde importları bu şekilde geçtik
+
 
 import youtube from './api/youtube'
 class App extends React.Component {
@@ -10,7 +10,11 @@ class App extends React.Component {
         videos: [],
         selectedVideo: null,
     }
+    onVideoSelect = (video) => {
 
+        this.setState({ selectedVideo: video })
+
+    }
 
     handleSubmit = async (searchTerm) => {
 
@@ -18,7 +22,7 @@ class App extends React.Component {
             params: {
                 part: 'snippet',
                 maxResult: 5,
-                key: 'AIzaSyDDT_0tasvFUIGqC0kBFKqHnUnbUZmeg7A',
+                key:  process.env.KEY,
                 q: searchTerm
             }
         }) // q => youtube api larında default olarak kullanılıyor ve query manasına geliyor
@@ -41,7 +45,7 @@ class App extends React.Component {
                             <VideoDetail video={selectedVideo} />
                         </Grid>
                         <Grid item xs={4}>
-                            <VideoList videos = {videos} />
+                            <VideoList videos={videos} onVideoSelect={this.onVideoSelect} />
                         </Grid>
                     </Grid>
                 </Grid>

@@ -14,20 +14,23 @@ class SearchBar extends React.Component {
     }
 
     handleSubmit = (event) => {
-        const { searchTerm } = this.state;
-        const { onFormSubmit } = this.props;
-        // this.props yoluyla onFormSubmit fonksiyonuna erişilir ve fonksiyon çağrılabilir, kullanılabilir
-        // bu fonksiyon da searchTerm e erişmemizi sağlar,
-        // bu dataya da state den erişilir.
+        if (event.keyCode === 13) {
+            const { searchTerm } = this.state;
+            const { onFormSubmit } = this.props;
+            // this.props yoluyla onFormSubmit fonksiyonuna erişilir ve fonksiyon çağrılabilir, kullanılabilir
+            // bu fonksiyon da searchTerm e erişmemizi sağlar,
+            // bu dataya da state den erişilir.
 
-        onFormSubmit(searchTerm);
-        event.preventDefault();
+            onFormSubmit(searchTerm);
+            event.preventDefault();
+        }
+
     }
 
     render() {
         return (
             <Paper elevation={6} style={{ padding: '25px' }}>
-                <form onSubmit={this.handleSubmit}>
+                <form onKeyDown={this.handleSubmit}>
                     <TextField fullWidth label="Search.." onChange={this.handleChange} />
                 </form>
             </Paper>
